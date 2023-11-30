@@ -37,7 +37,7 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = MaisonNeueFam,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp
+        fontSize = 18.sp
     ),
     labelLarge = TextStyle(
         fontFamily = MaisonNeueFam,

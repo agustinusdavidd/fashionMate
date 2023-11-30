@@ -2,10 +2,8 @@ package startpage
 
 import Route
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,7 +46,11 @@ fun StartPage(
         ){
             Button(
                 onClick = {
-                    navHostController.navigate(Route.Login.route)
+                    navHostController.navigate(Route.Login.route){
+                        popUpTo("root"){
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -66,7 +68,11 @@ fun StartPage(
             
             Button(
                 onClick = {
-                    navHostController.navigate(Route.Register.route)
+                    navHostController.navigate(Route.Register.route){
+                        popUpTo("root"){
+                            inclusive = true
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

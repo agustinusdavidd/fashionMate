@@ -3,4 +3,16 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
+    <string name="register_title">Buat Akun</string>
+    <string name="register_suppport_text">Lengkapi identitas di bawah ini untuk membuat akun</string>
+    <string name="label_name">Nama</string>
+    <string name="placeholder_input_name">Masukkan nama anda</string>
+    <string name="label_email">Email</string>
+    <string name="placeholder_input_email">contoh@gmail.com</string>
+    <string name="placeholder_input_password">Masukkan password anda</string>
+    <string name="label_password">Password</string>
+    <string name="placeholder_input_confirm_password">Konfirmasi password anda</string>
+    <string name="label_confirm_password">Konfirmasi Password</string>
+    <string name="have_account">Sudah punya akun?</string>
+    <string name="spacer">" "</string>
 </resources>
