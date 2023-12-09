@@ -20,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "FIREBASE_API_KEY", "\"${"FIREBASE_API_KEY"}\"")
     }
 
     buildTypes {

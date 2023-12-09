@@ -36,7 +36,8 @@ fun PlainTextField(
     label: String = "",
     placeHolder: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false
 ) {
     BaseTextField(
         modifier = modifier,
@@ -44,7 +45,8 @@ fun PlainTextField(
         value = value,
         placeholder = placeHolder,
         keyboardOptions = keyboardOptions,
-        onValueChange = onValueChange
+        onValueChange = onValueChange,
+        errorStatus = errorStatus
     )
 }
 
@@ -57,7 +59,8 @@ fun LeadingTextField(
     leadingIcon: (@Composable () -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false
 ) {
     BaseTextField(
         modifier = modifier,
@@ -67,7 +70,8 @@ fun LeadingTextField(
         leadingIcon = leadingIcon,
         keyboardOptions = keyboardOptions,
         onValueChange = onValueChange,
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
+        errorStatus = errorStatus
     )
 }
 
@@ -81,7 +85,8 @@ fun LeadingTrailingTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false
 ) {
     BaseTextField(
         modifier = modifier,
@@ -92,7 +97,8 @@ fun LeadingTrailingTextField(
         trailingIcon = trailingIcon,
         keyboardOptions = keyboardOptions,
         onValueChange = onValueChange,
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
+        errorStatus = errorStatus
     )
 }
 
@@ -107,7 +113,8 @@ fun BaseTextField(
     placeholder: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false
 ) {
     Column(
         modifier = modifier
@@ -136,6 +143,7 @@ fun BaseTextField(
             },
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
+            isError = !errorStatus,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 6.dp)
@@ -150,7 +158,8 @@ fun LeadingTrailingTextFieldPassword(
     label: String = "",
     placeHolder: String,
     leadingIcon: (@Composable () -> Unit)? = null,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false
 ) {
     var showPass by remember {
         mutableStateOf(false)
@@ -172,24 +181,7 @@ fun LeadingTrailingTextFieldPassword(
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if(showPass) VisualTransformation.None else PasswordVisualTransformation(),
-        onValueChange = onValueChange
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LeadingTextFieldPreview() {
-    LeadingTextField(
-        modifier = Modifier.padding(6.dp),
-        value = "",
-        label = "Email",
-        placeHolder = "contoh@gmail.com",
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_email),
-                contentDescription = ""
-            )
-        },
-        onValueChange = {}
+        onValueChange = onValueChange,
+        errorStatus = errorStatus
     )
 }

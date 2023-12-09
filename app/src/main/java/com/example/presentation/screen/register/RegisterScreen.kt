@@ -1,5 +1,6 @@
 package register
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -34,17 +37,21 @@ import com.example.fashion_mate.R
 import com.example.presentation.component.LeadingTextField
 import com.example.presentation.component.LeadingTrailingTextFieldPassword
 import com.example.presentation.component.TextHeader
+import com.example.presentation.data.Register.RegisterUiEvent
+import com.example.presentation.data.Register.RegisterViewModel
 import com.example.presentation.ui.theme.Blue
 import com.example.presentation.ui.theme.Primary
 import com.example.presentation.ui.theme.White
 
 @Composable
 fun RegisterScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    registerViewModel: RegisterViewModel
 ) {
+
     /*
-    Buat state untuk menyimpan inputan user
-     */
+Buat state untuk menyimpan inputan user
+ */
 
     var name by remember {
         mutableStateOf("")
@@ -79,130 +86,146 @@ fun RegisterScreen(
         }
     }
 
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp)
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        TextHeader(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 55.dp),
-            headerText = stringResource(R.string.register_title),
-            supportText = stringResource(R.string.register_suppport_text)
-        )
-
-        LeadingTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            value = name,
-            label = stringResource(R.string.label_name),
-            placeHolder = stringResource(R.string.placeholder_input_name),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_checkbox),
-                    contentDescription = "Name Icon"
-                )
-            },
-            onValueChange = {
-                name = it
-            }
-        )
-
-        LeadingTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            value = email,
-            label = stringResource(R.string.label_email),
-            placeHolder = stringResource(R.string.placeholder_input_email),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_email),
-                    contentDescription = "Email Icon"
-                )
-            },
-            onValueChange = {
-                email = it
-            }
-        )
-
-        LeadingTrailingTextFieldPassword(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            value = password,
-            label = stringResource(R.string.label_password),
-            placeHolder = stringResource(R.string.placeholder_input_password),
-            onValueChange = {
-                password = it
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_password),
-                    contentDescription = "Password Icon"
-                )
-            }
-        )
-
-        LeadingTrailingTextFieldPassword(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp),
-            value = confirmPassword,
-            label = stringResource(R.string.label_confirm_password),
-            placeHolder = stringResource(R.string.placeholder_input_confirm_password),
-            onValueChange = {
-                confirmPassword = it
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_password),
-                    contentDescription = "Password Icon"
-                )
-            }
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Button(
-            onClick = {
-
-            },
-            enabled = false,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp),
-            shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Primary,
-                contentColor = White
-            )
+                .fillMaxSize()
+                .padding(horizontal = 24.dp)
         ) {
-            Text(text = stringResource(R.string.register_title))
+            TextHeader(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 55.dp),
+                headerText = stringResource(R.string.register_title),
+                supportText = stringResource(R.string.register_suppport_text)
+            )
+
+            LeadingTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                value = name,
+                label = stringResource(R.string.label_name),
+                placeHolder = stringResource(R.string.placeholder_input_name),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_checkbox),
+                        contentDescription = "Name Icon"
+                    )
+                },
+                onValueChange = {
+                    registerViewModel.onEvent(RegisterUiEvent.nameChanged(it))
+                    name = it
+                },
+                errorStatus = registerViewModel.registerUiState.value.nameError
+            )
+
+            LeadingTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                value = email,
+                label = stringResource(R.string.label_email),
+                placeHolder = stringResource(R.string.placeholder_input_email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_email),
+                        contentDescription = "Email Icon"
+                    )
+                },
+                onValueChange = {
+                    registerViewModel.onEvent(RegisterUiEvent.emailChanged(it))
+                    email = it
+                },
+                errorStatus = registerViewModel.registerUiState.value.emailError
+            )
+
+            LeadingTrailingTextFieldPassword(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                value = password,
+                label = stringResource(R.string.label_password),
+                placeHolder = stringResource(R.string.placeholder_input_password),
+                onValueChange = {
+                    registerViewModel.onEvent(RegisterUiEvent.passwordChanged(it))
+                    password = it
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_password),
+                        contentDescription = "Password Icon"
+                    )
+                },
+                errorStatus = registerViewModel.registerUiState.value.passwordError
+            )
+
+            LeadingTrailingTextFieldPassword(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                value = confirmPassword,
+                label = stringResource(R.string.label_confirm_password),
+                placeHolder = stringResource(R.string.placeholder_input_confirm_password),
+                onValueChange = {
+                    registerViewModel.onEvent(RegisterUiEvent.confirmPasswordChanged(it))
+                    confirmPassword = it
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_password),
+                        contentDescription = "Password Icon"
+                    )
+                },
+                errorStatus = registerViewModel.registerUiState.value.confirmPasswordError
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Button(
+                onClick = {
+                    registerViewModel.onEvent(RegisterUiEvent.registerButtonClicked)
+                },
+                enabled = registerViewModel.validationStatus.value,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Primary,
+                    contentColor = White
+                )
+            ) {
+                Text(text = stringResource(R.string.register_title))
+            }
+
+            ClickableText(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 30.dp, top = 24.dp),
+                text = loginString,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    textAlign = TextAlign.Center
+                ),
+                onClick = { offset ->
+                    loginString.getStringAnnotations(offset, offset)
+                        .firstOrNull()?.let { span ->
+                            if (span.item == loginHere) {
+                                navHostController.navigate(Route.Login.route)
+                            }
+                        }
+                }
+            )
         }
 
-        ClickableText(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 30.dp, top = 24.dp),
-            text = loginString,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                textAlign = TextAlign.Center
-            ),
-            onClick = {offset ->
-                loginString.getStringAnnotations(offset, offset)
-                    .firstOrNull()?.let { span ->
-                        if(span.item == loginHere){
-                            navHostController.popBackStack()
-                        }
-                    }
-            }
-        )
+        if(registerViewModel.progress.value) {
+            CircularProgressIndicator()
+        }
 
     }
 }

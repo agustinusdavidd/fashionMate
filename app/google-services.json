@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "630989032978",
+    "project_id": "fashion-mate-database-1228b",
+    "storage_bucket": "fashion-mate-database-1228b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630989032978:android:e871d4d293741d09f812cb",
+        "android_client_info": {
+          "package_name": "com.example.fashion_mate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

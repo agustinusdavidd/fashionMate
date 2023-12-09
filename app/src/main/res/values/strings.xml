@@ -1,18 +1,29 @@
 <resources>
-    <string name="app_name">fashion_mate</string>
+    <string name="app_name">fashionmate</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+
     <string name="register_title">Buat Akun</string>
     <string name="register_suppport_text">Lengkapi identitas di bawah ini untuk membuat akun</string>
+
+    <string name="login_title">Welcome Back</string>
+    <string name="login_suppport_text">Isi email dan password untuk melanjutkan \natau gunakan akun media sosial</string>
+
     <string name="label_name">Nama</string>
     <string name="placeholder_input_name">Masukkan nama anda</string>
     <string name="label_email">Email</string>
     <string name="placeholder_input_email">contoh@gmail.com</string>
-    <string name="placeholder_input_password">Masukkan password anda</string>
     <string name="label_password">Password</string>
-    <string name="placeholder_input_confirm_password">Konfirmasi password anda</string>
+    <string name="placeholder_input_password">Masukkan password anda</string>
     <string name="label_confirm_password">Konfirmasi Password</string>
+    <string name="placeholder_input_confirm_password">Konfirmasi password anda</string>
+
     <string name="have_account">Sudah punya akun?</string>
+    <string name="dont_have_account">Tidak punya akun?</string>
+
     <string name="spacer">" "</string>
+    <string name="forget_password">Lupa Password?</string>
+
 </resources>
