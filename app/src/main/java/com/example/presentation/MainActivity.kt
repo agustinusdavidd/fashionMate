@@ -1,5 +1,6 @@
 package com.example.presentation
 
+import Route
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,6 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.presentation.data.Login.LoginViewModel
 import com.example.presentation.data.Register.RegisterViewModel
 import com.example.presentation.screen.DummyScreen
+import com.example.presentation.screen.calendar.CalendarScreen
+import com.example.presentation.screen.profile.ProfileScreen
+import com.example.presentation.screen.search.SearchScreen
 import com.example.presentation.ui.theme.Fashion_mateTheme
 import home.HomeScreen
 import login.LoginScreen
@@ -71,6 +75,24 @@ fun FashionMateApps() {
             route = Route.Dummy.route
         ){
             DummyScreen()
+        }
+
+        composable(
+            route = Route.Search.route
+        ) {
+            SearchScreen()
+        }
+
+        composable(
+            route = Route.Calendar.route
+        ) {
+            CalendarScreen()
+        }
+
+        composable(
+            route = Route.Profile.route
+        ) {
+            ProfileScreen()
         }
     }
 }

@@ -20,8 +20,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        buildConfigField("String", "FIREBASE_API_KEY", "\"${"FIREBASE_API_KEY"}\"")
     }
 
     buildTypes {
@@ -64,11 +62,13 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation(platform(libs.compose.bom))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(platform(libs.compose.bom))
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
     implementation(libs.icons.extended)
