@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.fashion_mate.R
+import com.example.presentation.navigation.Auth
 import com.example.presentation.ui.theme.Primary
 import com.example.presentation.ui.theme.White
 
@@ -46,11 +47,7 @@ fun StartPage(
         ){
             Button(
                 onClick = {
-                    navHostController.navigate(Route.Login.route){
-                        popUpTo("root"){
-                            inclusive = true
-                        }
-                    }
+                    navHostController.navigate(Auth.Login.route)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,7 +65,7 @@ fun StartPage(
             
             Button(
                 onClick = {
-                    navHostController.navigate(Route.Register.route){
+                    navHostController.navigate(Auth.Register.route){
                         popUpTo("root"){
                             inclusive = true
                         }

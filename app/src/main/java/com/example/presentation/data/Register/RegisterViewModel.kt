@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.presentation.data.rules.Validator
+import com.example.presentation.navigation.Auth
 import com.google.firebase.auth.FirebaseAuth
 
 class RegisterViewModel(private val navHostController: NavHostController) : ViewModel() {
@@ -96,7 +97,7 @@ class RegisterViewModel(private val navHostController: NavHostController) : View
         )
 
         validationStatus.value = isNameValid.status && isEmailValid.status &&
-            isPasswordValid.status && isConfirmPasswordValid.status
+                isPasswordValid.status && isConfirmPasswordValid.status
 
     }
 
@@ -118,7 +119,7 @@ class RegisterViewModel(private val navHostController: NavHostController) : View
                 progress.value = false
 
                 if(it.isSuccessful){
-                    navHostController.navigate(Route.Login.route)
+                    navHostController.navigate(Auth.Login.route)
                 }
             }
             .addOnCanceledListener {

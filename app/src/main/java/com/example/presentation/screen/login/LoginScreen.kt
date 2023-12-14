@@ -34,12 +34,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.fashion_mate.R
 import com.example.presentation.component.LeadingTextField
 import com.example.presentation.component.LeadingTrailingTextFieldPassword
 import com.example.presentation.component.TextHeader
 import com.example.presentation.data.Login.LoginUiEvent
 import com.example.presentation.data.Login.LoginViewModel
+import com.example.presentation.graphs.HomeNavGraph
+import com.example.presentation.navigation.Auth
 import com.example.presentation.ui.theme.Black
 import com.example.presentation.ui.theme.Primary
 import com.example.presentation.ui.theme.White
@@ -49,6 +52,7 @@ fun LoginScreen(
     loginViewModel: LoginViewModel,
     navHostController: NavHostController
 ) {
+
     var email by remember {
         mutableStateOf("")
     }
@@ -147,7 +151,9 @@ fun LoginScreen(
                     forgetPassword.getStringAnnotations(offset, offset)
                         .firstOrNull()?.let { span ->
                             if (span.item == forgetPass) {
-                                navHostController.navigate(Route.Dummy.route)
+                                /*
+                                * TODO Navigate To Forget Password
+                                * */
                             }
                         }
                 }
@@ -185,7 +191,7 @@ fun LoginScreen(
                     registerString.getStringAnnotations(offset, offset)
                         .firstOrNull()?.let { span ->
                             if (span.item == registerHere) {
-                                navHostController.navigate(Route.Register.route)
+                                navHostController.navigate(Auth.Register.route)
                             }
                         }
                 }

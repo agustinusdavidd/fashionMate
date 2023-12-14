@@ -39,19 +39,22 @@ import com.example.presentation.component.LeadingTrailingTextFieldPassword
 import com.example.presentation.component.TextHeader
 import com.example.presentation.data.Register.RegisterUiEvent
 import com.example.presentation.data.Register.RegisterViewModel
+import com.example.presentation.navigation.Auth
 import com.example.presentation.ui.theme.Blue
 import com.example.presentation.ui.theme.Primary
 import com.example.presentation.ui.theme.White
 
 @Composable
 fun RegisterScreen(
-    navHostController: NavHostController,
-    registerViewModel: RegisterViewModel
+    registerViewModel: RegisterViewModel,
+    navHostController: NavHostController
 ) {
 
+
+
     /*
-Buat state untuk menyimpan inputan user
- */
+    Buat state untuk menyimpan inputan user
+     */
 
     var name by remember {
         mutableStateOf("")
@@ -216,7 +219,7 @@ Buat state untuk menyimpan inputan user
                     loginString.getStringAnnotations(offset, offset)
                         .firstOrNull()?.let { span ->
                             if (span.item == loginHere) {
-                                navHostController.navigate(Route.Login.route)
+                                navHostController.navigate(Auth.Login.route)
                             }
                         }
                 }
