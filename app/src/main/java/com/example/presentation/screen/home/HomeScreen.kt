@@ -3,30 +3,26 @@
 package home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.NotificationsNone
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.AccountCircle
-import androidx.compose.material.icons.outlined.CalendarMonth
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,20 +31,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.fashion_mate.R
-import com.example.presentation.component.BottomBar
+import com.example.presentation.component.ImageCard
 import com.example.presentation.component.TextHeader
-import com.example.presentation.graphs.HomeNavGraph
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-@Composable fun HomeScreen(navController : NavHostController = rememberNavController()) {
+@Composable fun HomeScreen() {
 
     var text by remember {
         mutableStateOf("")
@@ -60,45 +53,91 @@ import com.example.presentation.graphs.HomeNavGraph
         mutableStateOf(0)
     }
 
+    val chipItemsList = listOf("Untuk anda", "Pria", "Wanita", "Semua")
+
+    var selectedChipItem by remember {
+        mutableStateOf(chipItemsList[0])
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        Scaffold (
-            bottomBar = {
-                BottomBar(navController = navController)
-            }
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp)
+            .padding(top = 24.dp)
         ){
-            HomeNavGraph(navController = navController)
-        }
+            Row{
+                Column {
+                    TextHeader(
+                        headerText = "Hi, Dito Rifadli Febrian",
+                        supportText = "Temukan style-mu bersama FashionMate."
+                    )
+                }
+                IconButton(
+                    onClick = {
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(top = 24.dp)
-        ){
-            Column {
-                TextHeader(
-                    headerText = "Hi, Dito Rifadli Febrian",
-                    supportText = "Temukan style-mu bersama FashionMate."
-                )
+                    },
+                    modifier = Modifier
+                        .padding(start = 24.dp)
+                        .fillMaxWidth()
+                ){
+                    Icon(
+                        imageVector = Icons.Default.NotificationsNone,
+                        contentDescription = null,
+                        Modifier
+                            .size(30.dp)
+                    )
+                }
             }
-            IconButton(
-                onClick = {
 
-                },
-                modifier = Modifier
-                    .padding(start = 24.dp)
-                    .fillMaxWidth()
-            ){
-                Icon(
-                    imageVector = Icons.Default.NotificationsNone,
-                    contentDescription = null,
-                    Modifier
-                        .size(36.dp)
-                )
+            Spacer(modifier = Modifier.fillMaxWidth())
+
+            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                items(chipItemsList){
+                    FilterChip(
+                        modifier = Modifier
+                            .padding(end = 6.dp)
+                            .padding(top = 6.dp),
+                        selected = (it == selectedChipItem),
+                        onClick = {
+                            selectedChipItem = it
+                        },
+                        label = {
+                            Text(text = it)
+                        }
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                content = {
+                    items(6) {
+                        Box (
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ){
+                            ImageCard(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f),
+                                painter = painterResource(id = R.drawable.dummy_cloth),
+                                contentDescription = "Baju Dummy"
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            ImageCard(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f),
+                                painter = painterResource(id = R.drawable.dummy_cloth),
+                                contentDescription = "Baju Dummy"
+                            )
+                        }
+                    }
+                }
+            )
         }
     }
 }

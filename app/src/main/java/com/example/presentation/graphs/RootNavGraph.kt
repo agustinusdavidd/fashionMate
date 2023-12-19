@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.presentation.navigation.Graph
+import com.example.presentation.screen.DummyScreen
+import com.example.presentation.screen.dashboard.DashboardScreen
 import home.HomeScreen
 
 @Composable
@@ -21,7 +23,7 @@ fun RootNavigationGraph(navController: NavHostController) {
         composable(
             route = Graph.HOME
         ) {
-            HomeScreen()
+            DashboardScreen()
         }
     }
 }

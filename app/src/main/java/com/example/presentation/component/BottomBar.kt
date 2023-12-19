@@ -1,22 +1,21 @@
 package com.example.presentation.component
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,8 +45,15 @@ fun BottomBar(navController: NavHostController) {
 
     if(bottomBarDestination) {
         BottomNavigation (
-            modifier = Modifier.heightIn(40.dp),
-            backgroundColor = White
+            modifier = Modifier
+                .heightIn(40.dp)
+                .clip(
+                    shape = RoundedCornerShape(
+                        topStart = 16.dp,
+                        topEnd = 16.dp
+                    )
+                ),
+            backgroundColor = Color.Black
         ){
             screens.forEach { screen ->
                 AddItem(
@@ -67,11 +73,23 @@ fun RowScope.AddItem(
 ) {
     BottomNavigationItem(
         label = {
-            Text(
-                text = screen.title,
-                fontSize = 12.sp,
-                fontStyle = FontStyle.Normal
-            )
+            if(currentDest?.hierarchy?.any {
+                    it.route == screen.route
+                } == true){
+                Text(
+                    text = screen.title,
+                    fontSize = 12.sp,
+                    fontStyle = FontStyle.Normal,
+                    color = White
+                )
+            } else {
+                Text(
+                    text = screen.title,
+                    fontSize = 12.sp,
+                    fontStyle = FontStyle.Normal,
+                    color = Color.Gray
+                )
+            }
         },
         icon = {
             if(currentDest?.hierarchy?.any {
@@ -79,12 +97,14 @@ fun RowScope.AddItem(
                 } == true){
                 Icon(
                     imageVector = screen.selectedIcon,
-                    contentDescription = "Navigation Icon"
+                    contentDescription = "Navigation Icon",
+                    tint = White
                 )
             } else {
                 Icon(
                     imageVector = screen.unselectedIcon,
-                    contentDescription = "Navigation Icon"
+                    contentDescription = "Navigation Icon",
+                    tint = Color.Gray
                 )
             }
         },

@@ -50,8 +50,6 @@ fun RegisterScreen(
     navHostController: NavHostController
 ) {
 
-
-
     /*
     Buat state untuk menyimpan inputan user
      */
