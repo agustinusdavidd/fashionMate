@@ -60,41 +60,45 @@ import com.example.presentation.component.TextHeader
     }
 
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 24.dp)
+            .padding(bottom = 24.dp)
     ) {
 
         Column(modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .padding(top = 24.dp)
         ){
-            Row{
+            Row(modifier = Modifier.padding(horizontal = 24.dp)){
                 Column {
                     TextHeader(
                         headerText = "Hi, Dito Rifadli Febrian",
                         supportText = "Temukan style-mu bersama FashionMate."
                     )
                 }
-                IconButton(
-                    onClick = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    IconButton(
+                        onClick = {
 
-                    },
-                    modifier = Modifier
-                        .padding(start = 24.dp)
-                        .fillMaxWidth()
-                ){
-                    Icon(
-                        imageVector = Icons.Default.NotificationsNone,
-                        contentDescription = null,
-                        Modifier
-                            .size(30.dp)
-                    )
+                        }
+                    ){
+                        Icon(
+                            imageVector = Icons.Default.NotificationsNone,
+                            contentDescription = null,
+                            Modifier.size(30.dp)
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.fillMaxWidth())
 
-            LazyRow(modifier = Modifier.fillMaxWidth()) {
+            LazyRow(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)) {
                 items(chipItemsList){
                     FilterChip(
                         modifier = Modifier
@@ -127,7 +131,9 @@ import com.example.presentation.component.TextHeader
                                 painter = painterResource(id = R.drawable.dummy_cloth),
                                 contentDescription = "Baju Dummy"
                             )
+
                             Spacer(modifier = Modifier.width(8.dp))
+
                             ImageCard(
                                 modifier = Modifier
                                     .fillMaxWidth(0.5f),

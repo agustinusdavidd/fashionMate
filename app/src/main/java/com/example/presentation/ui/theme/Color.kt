@@ -20,4 +20,5 @@ val White = Color(0xFFFFFFFF)
 val Icon = Color(0xFF838383)
 val Blue = Color(0xFF17a1fa)
 val Red = Color(0xFFd40a00)
+val HeaderBlack = Color(0xFF0D0D0D)
 

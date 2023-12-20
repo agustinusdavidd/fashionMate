@@ -1,6 +1,4 @@
 
-l
-<app/src/main/java/com/example/presentation/ui/theme/Theme.kt,1\d\1dccc20e5d36299caf5243d248a4fcdf1120701d
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
@@ -34,10 +32,6 @@ w
 Gapp/src/main/java/com/example/presentation/navigation/SettingsScreen.kt,e\5\e5df93c58b3836425c85e4cf0057d1d1d92886ed
 m
 =app/src/main/java/com/example/presentation/navigation/Auth.kt,5\d\5d7146a761001534c5a8af7ff4244ba910e74050
-I
-gradle/libs.versions.toml,d\7\d7595319a0658be6f1ed500ad590d42e4b28bc4f
-D
-app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 j
 :app/src/main/java/com/example/presentation/MainActivity.kt,b\8\b80a3d6d302583f7640098a75db4bfad45f7d325
 t

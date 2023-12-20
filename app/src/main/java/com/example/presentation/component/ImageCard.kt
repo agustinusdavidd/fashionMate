@@ -35,7 +35,7 @@ fun ImageCard(
     Card (
         modifier = Modifier
             .height(235.dp)
-            .width(145.dp)
+            .width(155.dp)
             .padding(bottom = 8.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 8.dp
