@@ -22,10 +22,6 @@ k
 ;app/src/main/java/com/example/presentation/utils/Pakaian.kt,a\a\aa044a6231bc587d7528360122cba98bc908957b
 u
 Eapp/src/main/java/com/example/presentation/data/Main/MainViewModel.kt,c\0\c047d12301f6bc2c0f438a543cc087db5f6325eb
-|
-Lapp/src/main/java/com/example/presentation/screen/calendar/CalendarScreen.kt,a\4\a491dc77476217613bc8df84af3307e469bb54d7
-z
-Japp/src/main/java/com/example/presentation/screen/profile/ProfileScreen.kt,1\c\1c0328f1e0403d4a80e6a1ecd8444d98bd6e277f
 n
 >app/src/main/java/com/example/presentation/navigation/Route.kt,3\d\3db8cf970ba52bc1d6dc1806af25a626e7a33b62
 w
@@ -36,5 +32,3 @@ j
 :app/src/main/java/com/example/presentation/MainActivity.kt,b\8\b80a3d6d302583f7640098a75db4bfad45f7d325
 t
 Dapp/src/main/java/com/example/presentation/graphs/ProfileNavGraph.kt,a\1\a188ed19c44082885be1d4d4d89c1ed3fc49f6e0
-r
-Bapp/src/main/java/com/example/presentation/component/TextHeader.kt,7\c\7c473ce9a897ba689f014877bacfb345dab3b872
