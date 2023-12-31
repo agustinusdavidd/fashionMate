@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.fashion_mate"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.fashion_mate"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.material)
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation(platform(libs.compose.bom))
+    implementation(libs.firebase.database.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -75,4 +76,5 @@ dependencies {
     implementation(libs.icons.extended)
     implementation(libs.splash.api)
     implementation(libs.navigation.compose)
+    implementation(libs.coil.compose)
 }

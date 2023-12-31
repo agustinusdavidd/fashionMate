@@ -9,8 +9,6 @@ j
 :app/src/main/java/com/example/presentation/LoginFlowApp.kt,9\f\9f8759a8633d62515cdbd55ab05761b746a364db
 
 Q.idea/sonarlint/securityhotspotstore/1/d/1dccc20e5d36299caf5243d248a4fcdf1120701d,9\e\9e659fa49a916278d3fef93ac2c75fcb33f82fde
-u
-Eapp/src/main/java/com/example/presentation/data/Login/LoginUiState.kt,f\a\fa448a435f30381f355e7754e39baa5b1ff5bbdc
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
@@ -18,17 +16,13 @@ H
 app/google-services.json,f\d\fd8d34b142d02ec743a8efefefd2c097961666e9
 A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
-k
-;app/src/main/java/com/example/presentation/utils/Pakaian.kt,a\a\aa044a6231bc587d7528360122cba98bc908957b
 u
 Eapp/src/main/java/com/example/presentation/data/Main/MainViewModel.kt,c\0\c047d12301f6bc2c0f438a543cc087db5f6325eb
 n
 >app/src/main/java/com/example/presentation/navigation/Route.kt,3\d\3db8cf970ba52bc1d6dc1806af25a626e7a33b62
-w
-Gapp/src/main/java/com/example/presentation/navigation/SettingsScreen.kt,e\5\e5df93c58b3836425c85e4cf0057d1d1d92886ed
-m
-=app/src/main/java/com/example/presentation/navigation/Auth.kt,5\d\5d7146a761001534c5a8af7ff4244ba910e74050
+r
+Bapp/src/main/java/com/example/presentation/component/TextHeader.kt,7\c\7c473ce9a897ba689f014877bacfb345dab3b872
+p
+@app/src/main/java/com/example/presentation/component/MonthRow.kt,a\d\add2d990474d5bd6a8cceb135709f10305b3fd9c
 j
 :app/src/main/java/com/example/presentation/MainActivity.kt,b\8\b80a3d6d302583f7640098a75db4bfad45f7d325
-t
-Dapp/src/main/java/com/example/presentation/graphs/ProfileNavGraph.kt,a\1\a188ed19c44082885be1d4d4d89c1ed3fc49f6e0

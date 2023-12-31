@@ -60,7 +60,9 @@ fun CustomTabs(
                         White
                     ),
                 selected = selected,
-                onClick = { selectedIndex = index },
+                onClick = {
+                    selectedIndex = index
+                },
                 text = { Text(text = text, color = Black) }
             )
         }

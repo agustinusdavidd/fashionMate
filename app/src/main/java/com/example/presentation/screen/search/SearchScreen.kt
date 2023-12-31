@@ -1,5 +1,6 @@
 package com.example.presentation.screen.search
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,15 +18,22 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -33,14 +41,24 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.example.fashion_mate.R
 import com.example.presentation.component.ImageCard
+import com.example.presentation.component.ListPakaian
 import com.example.presentation.component.searchBar
+import com.example.presentation.data.Data.DataEvent
+import com.example.presentation.data.Data.DataState
+import com.example.presentation.data.Data.DataViewModel
 import com.example.presentation.ui.theme.HeaderBlack
 
 @Composable
 fun SearchScreen() {
 
+    var query by remember {
+        mutableStateOf("")
+    }
+
     val mainResultText = "Menampilkan hasil pencarian untuk "
-    var queryResultText = "semua"
+    var queryResultText by remember {
+        mutableStateOf("semua")
+    }
 
     val resultText = buildAnnotatedString {
         append(mainResultText)
@@ -49,6 +67,8 @@ fun SearchScreen() {
         }
     }
 
+    var viewModel = DataViewModel()
+
     Column {
 
         Box(modifier = Modifier
@@ -56,6 +76,15 @@ fun SearchScreen() {
             .height(150.dp)
             .background(HeaderBlack)
         ){
+
+            if(query == ""){
+                viewModel.onEvent(DataEvent.onFirstOpenSearch())
+            } else {
+                viewModel.onEvent(DataEvent.onSearch(query))
+            }
+
+            Log.d("Data View Model 0", "Start")
+
             Image(
                 modifier = Modifier.align(BottomStart),
                 painter = painterResource(id = R.drawable.search_header),
@@ -78,7 +107,13 @@ fun SearchScreen() {
                                 imageVector = Icons.Filled.Search,
                                 contentDescription = "Search"
                             )
-                        }
+                        },
+                        onValueChange = {
+                            query = it
+                            queryResultText = query
+                        },
+                        placeholder = stringResource(id = R.string.search),
+                        keyword = query
                     )
                     Icon(
                         modifier = Modifier
@@ -92,38 +127,66 @@ fun SearchScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp)
+        ){
 
-        Text(text = resultText, modifier = Modifier.padding(horizontal = 24.dp))
+            if(query == ""){
+                queryResultText == "semua"
+            }
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            content = {
-                items(6) {
-                    Box (
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ){
-                        ImageCard(
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f),
-                            painter = painterResource(id = R.drawable.dummy_cloth),
-                            contentDescription = "Baju Dummy"
-                        )
+            Text(text = resultText, )
 
-                        Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                        ImageCard(
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f),
-                            painter = painterResource(id = R.drawable.dummy_cloth),
-                            contentDescription = "Baju Dummy"
-                        )
-                    }
+            ShowData(viewModel = viewModel)
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+        }
+    }
+}
+
+@Composable
+fun ShowData(viewModel: DataViewModel) {
+    when (val result = viewModel.response.value) {
+        is DataEvent.Loading -> {
+            viewModel.progress.value = true
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                if (viewModel.progress.value) {
+                    CircularProgressIndicator()
                 }
             }
-        )
+        }
+        is DataEvent.Success -> {
+            ListPakaian(pakaian = result.data)
+            viewModel.progress.value = false
+        }
+
+        is DataEvent.Failure -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = result.msg)
+                viewModel.progress.value = false
+            }
+        }
+
+        else -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Error Fetching Data")
+                viewModel.progress.value = false
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@
 package com.example.presentation.component
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,39 +30,21 @@ import com.example.fashion_mate.R
 @Composable
 fun searchBar(
     modifier: Modifier = Modifier,
-    keyword: String = "",
-    leadingIcon:  (@Composable () -> Unit)? = null
+    leadingIcon:  (@Composable () -> Unit)? = null,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    keyword: String
 ) {
-
-    var keyword by remember {
-        mutableStateOf(keyword)
-    }
 
     Column(
         modifier = modifier
     ) {
         LeadingTextField(
             value = keyword,
-            placeHolder = stringResource(R.string.search),
-            onValueChange = {
-                keyword = it
-            },
+            placeHolder = placeholder,
+            onValueChange = onValueChange,
             leadingIcon = leadingIcon,
             errorStatus = true
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun searchBarPreview() {
-    searchBar(
-        modifier = Modifier.fillMaxWidth(),
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Search,
-                contentDescription = "Search"
-            )
-        }
-    )
 }

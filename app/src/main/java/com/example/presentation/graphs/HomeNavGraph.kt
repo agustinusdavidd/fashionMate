@@ -1,6 +1,7 @@
 package com.example.presentation.graphs
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -12,11 +13,12 @@ import com.example.presentation.screen.search.SearchScreen
 import home.HomeScreen
 
 @Composable
-fun HomeNavGraph(navController: NavHostController) {
+fun HomeNavGraph(navController: NavHostController, modifier: Modifier) {
     NavHost(
         navController = navController,
         route = Graph.HOME,
-        startDestination = BottomBarScreen.Home.route
+        startDestination = BottomBarScreen.Home.route,
+        modifier = modifier
     ) {
         composable(
             route = BottomBarScreen.Home.route
@@ -39,12 +41,14 @@ fun HomeNavGraph(navController: NavHostController) {
         composable(
             route = BottomBarScreen.Profile.route
         ) {
-            ProfileScreen()
+            ProfileScreen(navController)
         }
+
+        profileNavGraph(navController = navController)
 
         /*
         TODO ADD THIS CODE BELOW
-        profileNavGraph(navController = navController)
+
          */
     }
 }
