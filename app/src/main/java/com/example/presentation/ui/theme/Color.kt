@@ -23,3 +23,9 @@ val Red = Color(0xFFd40a00)
 val HeaderBlack = Color(0xFF0D0D0D)
 val BackgroundWhite = Color(0xFFF4F4F4)
 
+// Skin color
+val Bright = Color(0xFFFFDFC4)
+val SlightlyBright = Color(0xFFF0C08A)
+val Normal = Color(0xFFCF9E7C)
+val SlightlyDark = Color(0xFF94613C)
+val Dark = Color(0xFF623A18)

@@ -18,9 +18,19 @@ val MaisonNeueFam = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
     headlineLarge = TextStyle(
-      fontFamily = MaisonNeueFam,
+        fontFamily = MaisonNeueFam,
         fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = MaisonNeueFam,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp
+    ),
+    displaySmall = TextStyle(
+        fontFamily = MaisonNeueFam,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = MaisonNeueFam,

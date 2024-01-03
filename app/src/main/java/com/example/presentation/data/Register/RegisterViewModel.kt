@@ -69,11 +69,6 @@ class RegisterViewModel(private val navHostController: NavHostController) : View
         Log.d(TAG, "Register Button Pressed")
         printState()
 
-        regist(
-            nama = registerUiState.value.name,
-            email = registerUiState.value.email
-        )
-
         createUser(
             email = registerUiState.value.email,
             password = registerUiState.value.password
@@ -135,6 +130,11 @@ class RegisterViewModel(private val navHostController: NavHostController) : View
                 if(it.isSuccessful){
                     navHostController.navigate(Auth.Login.route)
                 }
+
+                regist(
+                    nama = registerUiState.value.name,
+                    email = registerUiState.value.email
+                )
             }
             .addOnCanceledListener {
                 Log.d(TAG, "Canceled")
@@ -149,12 +149,12 @@ class RegisterViewModel(private val navHostController: NavHostController) : View
 
         progress.value = true
 
-        val user = User(nama = nama, email = email, berat_badan = null, jenis_kelamin = null, tinggi_badan = null, warna_kulit = null)
+        val user = User(nama = nama, email = email, berat_badan = "", jenis_kelamin = "", tinggi_badan = "", warna_kulit = "")
 
-        val shaNama = sha256(nama)
-        Log.d("Test sha", shaNama)
+        val shaEmail = sha256(email)
+        Log.d("Test sha", shaEmail)
 
-        db.child(shaNama).setValue(user)
+        db.child(shaEmail).setValue(user)
             .addOnCompleteListener {
                 progress.value = false
 
