@@ -27,6 +27,17 @@ object Validator {
         )
     }
 
+    fun validateHeight(height: Int) : validationResult {
+        return validationResult(
+            height > 60 && height < 220
+        )
+    }
+
+    fun validateWeight(weight: Int) : validationResult {
+        return validationResult(
+            weight > 40 && weight < 120
+        )
+    }
 }
 
 data class validationResult (

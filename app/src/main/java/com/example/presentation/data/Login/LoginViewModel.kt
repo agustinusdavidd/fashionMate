@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.presentation.data.rules.Validator
 import com.example.presentation.navigation.Graph
 import com.google.firebase.auth.FirebaseAuth
@@ -14,9 +13,7 @@ class LoginViewModel(private val navHostController: NavHostController) : ViewMod
     private val TAG = "LoginViewModel"
 
     var loginUiState = mutableStateOf(LoginUiState())
-
     var validationStatus = mutableStateOf(false)
-
     var progress = mutableStateOf(false)
 
     fun  onEvent(event: LoginUiEvent){

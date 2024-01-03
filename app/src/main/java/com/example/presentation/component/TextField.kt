@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,13 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.fashion_mate.R
 import com.example.presentation.ui.theme.Label
 
 @Composable
@@ -125,7 +124,9 @@ fun BaseTextField(
             text = label,
             style = MaterialTheme.typography.labelMedium,
             color = Label,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp)
         )
         OutlinedTextField(
             value = value ,
@@ -185,5 +186,38 @@ fun LeadingTrailingTextFieldPassword(
         visualTransformation = if(showPass) VisualTransformation.None else PasswordVisualTransformation(),
         onValueChange = onValueChange,
         errorStatus = errorStatus
+    )
+}
+
+@Composable
+fun SmallTextField(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    placeholder: String,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    onValueChange: (String) -> Unit,
+    errorStatus: Boolean = false,
+) {
+    TextField(
+        value = value ,
+        onValueChange = onValueChange,
+        shape = RoundedCornerShape(12.dp),
+        placeholder = {
+            Text(
+                text = placeholder,
+                style = MaterialTheme.typography.labelMedium
+            )
+        },
+        trailingIcon = {
+            trailingIcon?.invoke()
+        },
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        isError = errorStatus,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White, shape = RoundedCornerShape(12.dp))
     )
 }
