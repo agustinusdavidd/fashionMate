@@ -7,32 +7,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
 import androidx.compose.material.TabPosition
+import androidx.compose.material.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.presentation.data.Profile.ProfileEvent
+import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.ui.theme.Black
 import com.example.presentation.ui.theme.Icon
 import com.example.presentation.ui.theme.White
 
 @Composable
 fun CustomTabs(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ProfileViewModel
 ) {
 
     var selectedIndex by remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
 
-    val list = listOf("Saved", "Post")
+    val list = listOf("Saved", "Upload")
 
     TabRow(selectedTabIndex = selectedIndex,
         backgroundColor = White,
@@ -42,7 +45,7 @@ fun CustomTabs(
             .padding(1.dp)
             .border(1.dp, color = Black, shape = RoundedCornerShape(50))
             .width(250.dp),
-        indicator = { tabPositions: List<TabPosition> ->
+        indicator = { _: List<TabPosition> ->
             Box {}
         }
     ) {
@@ -67,10 +70,17 @@ fun CustomTabs(
             )
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun CustomTabsPreview() {
-    CustomTabs()
+    LaunchedEffect(selectedIndex){
+        when(selectedIndex) {
+            0 -> {
+                ProfileEvent.filterUpload(false)
+                viewModel.onEvent(ProfileEvent.filterSaved(true))
+            }
+            1 -> {
+                ProfileEvent.filterSaved(false)
+                viewModel.onEvent(ProfileEvent.filterUpload(true))
+            }
+        }
+    }
 }

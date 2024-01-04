@@ -13,12 +13,8 @@ import com.google.firebase.database.ValueEventListener
 class DataViewModel : ViewModel(){
 
     val response: MutableState<DataEvent> = mutableStateOf(DataEvent.Empty)
-
-    var dataState = mutableStateOf(DataState())
-
     var progress = mutableStateOf(false)
-
-    val db = FirebaseDatabase.getInstance().getReference("pakaian")
+    private val db = FirebaseDatabase.getInstance().getReference("pakaian")
 
     fun onEvent(event : DataEvent){
         when(event) {
@@ -47,12 +43,10 @@ class DataViewModel : ViewModel(){
         val tempList = mutableListOf<Pakaian>()
         response.value = DataEvent.Loading
 
-        Log.d("Data View Model 2", "All data")
-
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(DataSnap in snapshot.children) {
-                    val pakaianItem = DataSnap.getValue(Pakaian::class.java)
+                for(dataSnap in snapshot.children) {
+                    val pakaianItem = dataSnap.getValue(Pakaian::class.java)
                     if(pakaianItem != null) {
                         tempList.add(pakaianItem)
                     }
@@ -72,9 +66,9 @@ class DataViewModel : ViewModel(){
 
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(DataSnap in snapshot.children) {
-                    val pakaianItem = DataSnap.getValue(Pakaian::class.java)
-                    if(pakaianItem != null && pakaianItem?.gender == "wanita") {
+                for(dataSnap in snapshot.children) {
+                    val pakaianItem = dataSnap.getValue(Pakaian::class.java)
+                    if(pakaianItem != null && pakaianItem.gender == "wanita") {
                         tempList.add(pakaianItem)
                     }
                 }
@@ -93,9 +87,9 @@ class DataViewModel : ViewModel(){
 
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(DataSnap in snapshot.children) {
-                    val pakaianItem = DataSnap.getValue(Pakaian::class.java)
-                    if(pakaianItem != null && pakaianItem?.gender == "pria") {
+                for(dataSnap in snapshot.children) {
+                    val pakaianItem = dataSnap.getValue(Pakaian::class.java)
+                    if(pakaianItem != null && pakaianItem.gender == "pria") {
                         tempList.add(pakaianItem)
                     }
                 }
@@ -114,8 +108,8 @@ class DataViewModel : ViewModel(){
 
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(DataSnap in snapshot.children) {
-                    val pakaianItem = DataSnap.getValue(Pakaian::class.java)
+                for(dataSnap in snapshot.children) {
+                    val pakaianItem = dataSnap.getValue(Pakaian::class.java)
                     if(pakaianItem != null && pakaianItem.keyword == query) {
                         tempList.add(pakaianItem)
                     }
@@ -127,7 +121,6 @@ class DataViewModel : ViewModel(){
                 response.value = DataEvent.Failure(error.message)
             }
         })
-        Log.d("Data View Model 3", "Query data")
     }
 
     fun isFirstTimeHomeOpen(){

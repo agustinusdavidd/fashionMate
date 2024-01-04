@@ -6,9 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.navigation.Graph
 import com.example.presentation.navigation.SettingsScreen
 import com.example.presentation.screen.setting.SettingScreen
+import com.example.presentation.screen.setting.option.ChangePasswordScreen
 import com.example.presentation.screen.setting.option.DeleteAccountScreen
 import com.example.presentation.screen.setting.option.EditProfileScreen
 import com.example.presentation.screen.setting.option.NotificationSettingScreen
@@ -18,6 +20,8 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
         route = Graph.SETTING,
         startDestination = SettingsScreen.Setting.route
     ) {
+
+        val viewModel = ProfileViewModel()
 
 //        val navController: NavHostController = rememberNavController()
         composable(
@@ -29,7 +33,7 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
         composable(
             route = SettingsScreen.EditProfile.route
         ) {
-            EditProfileScreen(navController)
+            EditProfileScreen(navController, viewModel)
         }
 
         composable(
@@ -47,7 +51,7 @@ fun NavGraphBuilder.profileNavGraph(navController: NavHostController) {
         composable(
             route = SettingsScreen.ChangePassword.route
         ) {
-            DeleteAccountScreen(navController)
+            ChangePasswordScreen(navController)
         }
     }
 }

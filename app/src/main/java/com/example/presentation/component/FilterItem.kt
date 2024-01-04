@@ -1,5 +1,6 @@
 package com.example.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.presentation.data.Data.DataEvent
 import com.example.presentation.data.Data.DataViewModel
+import com.example.presentation.data.Profile.ProfileEvent
+import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.ui.theme.Bright
 import com.example.presentation.ui.theme.Dark
 import com.example.presentation.ui.theme.Icon
@@ -110,12 +113,14 @@ fun HorizontalFilterButton(viewModel : DataViewModel) {
 @Composable
 fun GenderFilter(
     headerTextStyle: TextStyle = MaterialTheme.typography.headlineSmall,
-    headerColor: Color = Primary
+    viewModel: ProfileViewModel,
+    headerColor: Color = Primary,
+    selected: String
 ) {
-    val filterItems = listOf("Pria", "Wanita")
+    val filterItems = listOf("pria", "wanita")
 
     var selectedFilter by remember {
-        mutableStateOf("")
+        mutableStateOf(selected)
     }
 
     Text(text = "Gender", style = headerTextStyle, color = headerColor)
@@ -130,11 +135,12 @@ fun GenderFilter(
                 onFilterSelected = {
                     selectedFilter = filter
                     when (selectedFilter) {
-                        "Pria" -> {
-
+                        "pria" -> {
+                            viewModel.onEvent(ProfileEvent.genderChanged("pria"))
                         }
 
-                        "Wanita" -> {
+                        "wanita" -> {
+                            viewModel.onEvent(ProfileEvent.genderChanged("wanita"))
                         }
                     }
                 }
@@ -146,10 +152,13 @@ fun GenderFilter(
 @Composable
 fun SkinChooser(
     headerTextStyle: TextStyle = MaterialTheme.typography.headlineSmall,
-    headerColor: Color = Primary
+    headerColor: Color = Primary,
+    viewModel: ProfileViewModel,
+    warna_kulit: String
 ) {
+
     var skinColor by remember {
-        mutableStateOf("Normal")
+         mutableStateOf(warna_kulit)
     }
 
     Column{
@@ -165,7 +174,8 @@ fun SkinChooser(
                     .height(60.dp)
                     .padding(end = 16.dp),
                 onClick = {
-
+                    viewModel.onEvent(ProfileEvent.skinChanged("bright"))
+                    skinColor = "bright"
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Bright
@@ -173,7 +183,7 @@ fun SkinChooser(
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(
                     width = 2.dp,
-                    color = if(skinColor == "Bright") Purple40 else Bright
+                    color = if(skinColor == "bright") Purple40 else Bright
                 )
             ) {}
             Button(
@@ -182,7 +192,8 @@ fun SkinChooser(
                     .height(60.dp)
                     .padding(end = 16.dp),
                 onClick = {
-
+                    viewModel.onEvent(ProfileEvent.skinChanged("slightly bright"))
+                    skinColor = "slightly bright"
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = SlightlyBright
@@ -190,7 +201,7 @@ fun SkinChooser(
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(
                     width = 2.dp,
-                    color = if(skinColor == "SlightlyBright") Purple40 else SlightlyBright
+                    color = if(skinColor == "slightly bright") Purple40 else SlightlyBright
                 )
             ) {}
             Button(
@@ -199,7 +210,8 @@ fun SkinChooser(
                     .height(60.dp)
                     .padding(end = 16.dp),
                 onClick = {
-
+                    viewModel.onEvent(ProfileEvent.skinChanged("normal"))
+                    skinColor = "normal"
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Normal
@@ -207,7 +219,7 @@ fun SkinChooser(
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(
                     width = 2.dp,
-                    color = if(skinColor == "Normal") Purple40 else Normal
+                    color = if(skinColor == "normal") Purple40 else Normal
                 )
             ) {}
             Button(
@@ -216,7 +228,8 @@ fun SkinChooser(
                     .height(60.dp)
                     .padding(end = 16.dp),
                 onClick = {
-
+                    viewModel.onEvent(ProfileEvent.skinChanged("slightly dark"))
+                    skinColor = "slightly dark"
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = SlightlyDark
@@ -224,7 +237,7 @@ fun SkinChooser(
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(
                     width = 2.dp,
-                    color = if(skinColor == "SlightlyDark") Purple40 else SlightlyDark
+                    color = if(skinColor == "slightly dark") Purple40 else SlightlyDark
                 )
             ) {}
             Button(
@@ -233,7 +246,8 @@ fun SkinChooser(
                     .height(60.dp)
                     .padding(end = 16.dp),
                 onClick = {
-
+                    viewModel.onEvent(ProfileEvent.skinChanged("dark"))
+                    skinColor = "dark"
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Dark
@@ -241,21 +255,9 @@ fun SkinChooser(
                 shape = RoundedCornerShape(6.dp),
                 border = BorderStroke(
                     width = 2.dp,
-                    color = if(skinColor == "Dark") Purple40 else Dark
+                    color = if(skinColor == "dark") Purple40 else Dark
                 )
             ) {}
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FilterItemPreview() {
-    FilterItem(
-        text = "Untuk anda",
-        isSelected = false,
-        onFilterSelected = {
-
-        }
-    )
 }

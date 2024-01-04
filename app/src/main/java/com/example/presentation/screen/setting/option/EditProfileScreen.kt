@@ -1,19 +1,27 @@
 package com.example.presentation.screen.setting.option
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -30,37 +38,87 @@ import com.example.presentation.data.Profile.ProfileEvent
 import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.ui.theme.Primary
 import com.example.presentation.ui.theme.White
+import kotlinx.coroutines.delay
+import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: ProfileViewModel
 ) {
 
-    val viewModel = ProfileViewModel()
-
-    var nama = viewModel.profileState.value.nama
-    var email = viewModel.profileState.value.email
-    
-    var gender by remember {
-        mutableStateOf("")
+    var nama by rememberSaveable {
+        mutableStateOf(viewModel.profileState.value.nama)
     }
 
-    var warna_kulit by remember {
-        mutableStateOf("")
+    var email by rememberSaveable {
+        mutableStateOf(viewModel.profileState.value.email)
     }
 
-    var tinggi by remember {
-        mutableStateOf(0)
+    var gender by rememberSaveable {
+        mutableStateOf(viewModel.profileState.value.gender)
     }
 
-    var berat by remember {
-        mutableStateOf(0)
+    var tinggi by rememberSaveable {
+        mutableStateOf(viewModel.profileState.value.tinggi_badan)
+    }
+
+    var berat by rememberSaveable {
+        mutableStateOf(viewModel.profileState.value.berat_badan)
+    }
+
+    var warna_kulit by rememberSaveable {
+        mutableStateOf(viewModel.profileState.value.warna_kulit)
+    }
+
+    var firstTime by rememberSaveable {
+        mutableStateOf(true)
+    }
+
+    val openDialog = remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(firstTime) {
+        if (firstTime) {
+            // Execute this block when the composable is first launched or recomposed
+            viewModel.onEvent(ProfileEvent.profileOpened)
+
+            delay(5000)
+
+            nama = viewModel.profileState.value.nama.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+
+            email = viewModel.profileState.value.email
+            tinggi = viewModel.profileState.value.tinggi_badan
+            berat = viewModel.profileState.value.berat_badan
+            gender = viewModel.profileState.value.gender
+            warna_kulit = viewModel.profileState.value.warna_kulit
+
+            firstTime = false
+        }
     }
 
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 24.dp)
     ) {
+
+        if(firstTime){
+            Box{
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = CenterHorizontally
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+        }
 
         SettingHeader(title = "Edit Profile", navController = navController)
 
@@ -78,10 +136,10 @@ fun EditProfileScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        GenderFilter()
+        GenderFilter(viewModel = viewModel, selected = gender)
         Spacer(modifier = Modifier.height(16.dp))
         
-        SkinChooser()
+        SkinChooser(viewModel = viewModel, warna_kulit = warna_kulit)
         Spacer(modifier = Modifier.height(16.dp))
 
         TrailingSmallTextHeader(
@@ -94,6 +152,7 @@ fun EditProfileScreen(
                 } else {
                     tinggi = it.toInt()
                 }
+                viewModel.onEvent(ProfileEvent.heightChange(it))
             },
             headerText2 = "Berat",
             supportText2 = berat.toString() + " kg",
@@ -104,13 +163,16 @@ fun EditProfileScreen(
                 } else {
                     berat = it.toInt()
                 }
+                viewModel.onEvent(ProfileEvent.weightChange(it))
             }
         )
 
         Spacer(modifier = Modifier.weight(1f))
         
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                openDialog.value = true
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp)
@@ -124,11 +186,44 @@ fun EditProfileScreen(
             Text(text = "Simpan")
         }
 
+        if (openDialog.value){
+            AlertDialog(
+                onDismissRequest = {
+                    openDialog.value = true
+                },
+                title = {
+                    Text(text = "Konfirmasi perubahan")
+                },
+                text = {
+                    Text(text = "Anda yakin ingin mengubah data anda?")
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.onEvent(ProfileEvent.savedButtonClicked)
+                            openDialog.value = false
+                        }
+                    ) {
+                        Text(text = "Konfirmasi")
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = {
+                            openDialog.value = false
+                        }
+                    ) {
+                        Text(text = "Batal")
+                    }
+                }
+            )
+        }
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun epsp() {
-    EditProfileScreen(navController = rememberNavController())
+    EditProfileScreen(navController = rememberNavController(), ProfileViewModel())
 }

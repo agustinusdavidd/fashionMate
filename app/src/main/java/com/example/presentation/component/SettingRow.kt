@@ -26,13 +26,19 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.navigation.SettingsScreen
 import com.example.presentation.ui.theme.Black
 
 @Composable
-fun SettingRow(id: ImageVector, name: String, navHostController: NavHostController) {
+fun SettingRow(
+    id: ImageVector,
+    name: String,
+    navHostController: NavHostController
+) {
 
     val settingString = buildAnnotatedString {
         withStyle(style = SpanStyle(color = Black)) {

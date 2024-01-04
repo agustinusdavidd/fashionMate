@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -26,19 +25,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.fashion_mate.R
+import com.example.presentation.data.Profile.ProfileEvent
+import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.utils.Models.Pakaian
+import com.example.presentation.utils.Models.UploadCloth
 
 @Composable
 fun ImageCard(
     modifier: Modifier = Modifier,
     painter: Painter,
-    contentDescription: String
-    ) {
+    contentDescription: String,
+    hide: Boolean,
+    enabled: Boolean,
+    viewModel: ProfileViewModel,
+    photo_url: String
+) {
+
+    var checked by remember {
+        mutableStateOf(false)
+    }
+
     Card (
         modifier = Modifier
             .height(235.dp)
@@ -49,10 +57,6 @@ fun ImageCard(
         elevation = 8.dp
     ){
         Box {
-
-            var checked by remember {
-                mutableStateOf(false)
-            }
 
             Image (
                 painter = painter,
@@ -65,8 +69,9 @@ fun ImageCard(
                 checked = checked,
                 onCheckedChange = {
                     checked = it
-
-                }
+                    viewModel.onEvent(ProfileEvent.clothSaved(photo_url))
+                },
+                enabled = enabled
             ) {
                 Icon(
                     imageVector = if(checked){
@@ -77,6 +82,8 @@ fun ImageCard(
                     contentDescription = "Save Style",
                     tint = if(checked){
                         Color.LightGray
+                    } else if (hide) {
+                        Color.Transparent
                     } else {
                         Color.White
                     }
@@ -87,7 +94,10 @@ fun ImageCard(
 }
 
 @Composable
-fun ListPakaian(pakaian: MutableList<Pakaian>) {
+fun ListPakaian(
+    pakaian: MutableList<Pakaian>,
+    viewModel: ProfileViewModel
+) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)){
         items(pakaian) {
             ImageCard(
@@ -97,17 +107,36 @@ fun ListPakaian(pakaian: MutableList<Pakaian>) {
                     model = it.photo_url,
                     contentScale = ContentScale.Crop
                 ),
-                contentDescription = "Gaya Berpakaian"
+                contentDescription = "Gaya Berpakaian",
+                hide = false,
+                enabled = true,
+                viewModel = viewModel,
+                photo_url = it.photo_url!!
             )
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun ImageCardPreview(){
-    ImageCard(
-        painter = painterResource(id = R.drawable.dummy_cloth),
-        contentDescription = "Dummy"
-    )
+fun ListUploadPakaian(
+    pakaian: MutableList<UploadCloth>,
+    viewModel: ProfileViewModel
+) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2)){
+        items(pakaian) {
+            ImageCard(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f),
+                painter = rememberAsyncImagePainter(
+                    model = it.photo_url,
+                    contentScale = ContentScale.Crop
+                ),
+                contentDescription = "Gaya Berpakaian",
+                hide = true,
+                enabled = false,
+                viewModel = viewModel,
+                photo_url = it.photo_url
+            )
+        }
+    }
 }

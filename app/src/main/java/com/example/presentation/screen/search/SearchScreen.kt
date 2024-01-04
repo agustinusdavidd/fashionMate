@@ -46,6 +46,7 @@ import com.example.presentation.component.searchBar
 import com.example.presentation.data.Data.DataEvent
 import com.example.presentation.data.Data.DataState
 import com.example.presentation.data.Data.DataViewModel
+import com.example.presentation.data.Profile.ProfileViewModel
 import com.example.presentation.ui.theme.HeaderBlack
 
 @Composable
@@ -152,6 +153,8 @@ fun SearchScreen() {
 
 @Composable
 fun ShowData(viewModel: DataViewModel) {
+    val profileViewModel = ProfileViewModel()
+
     when (val result = viewModel.response.value) {
         is DataEvent.Loading -> {
             viewModel.progress.value = true
@@ -165,7 +168,7 @@ fun ShowData(viewModel: DataViewModel) {
             }
         }
         is DataEvent.Success -> {
-            ListPakaian(pakaian = result.data)
+            ListPakaian(pakaian = result.data, viewModel = profileViewModel)
             viewModel.progress.value = false
         }
 

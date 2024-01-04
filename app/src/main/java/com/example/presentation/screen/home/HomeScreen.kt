@@ -1,9 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package home
 
 import android.annotation.SuppressLint
-import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -25,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,19 +38,21 @@ import kotlinx.coroutines.delay
 import java.util.Locale
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable fun HomeScreen() {
 
-    var viewModel = DataViewModel()
-    var profileViewModel = ProfileViewModel()
+    val viewModel = DataViewModel()
+    val profileViewModel = ProfileViewModel()
 
-    var name by remember {
-        mutableStateOf("")
+    var name by rememberSaveable {
+        mutableStateOf(profileViewModel.profileState.value.nama)
     }
 
-    LaunchedEffect(profileViewModel.profileState.value.firstTime) {
-        Log.d("Get User Data", profileViewModel.profileState.value.firstTime.toString())
-        if (profileViewModel.profileState.value.firstTime) {
+    var firstTime by rememberSaveable {
+        mutableStateOf(true)
+    }
+
+    LaunchedEffect(firstTime) {
+        if (firstTime) {
             // Execute this block when the composable is first launched or recomposed
             profileViewModel.onEvent(ProfileEvent.profileOpened)
 
@@ -64,11 +63,9 @@ import java.util.Locale
                     Locale.getDefault()
                 ) else it.toString()
             }
-            Log.d("Get User Data", name)
 
-            profileViewModel.profileState.value.firstTime = false
+            firstTime = false
         }
-        Log.d("Get User Data", profileViewModel.profileState.value.firstTime.toString())
     }
 
     Surface(
@@ -76,16 +73,29 @@ import java.util.Locale
             .fillMaxSize()
             .padding(top = 24.dp)
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
         ) {
 
+            if(firstTime){
+                Box{
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+
             Row{
                 Column {
                     TextHeader(
-                        headerText = "Hi, " + name,
+                        headerText = "Hi, $name",
                         supportText = "Temukan style-mu bersama FashionMate."
                     )
                 }
@@ -122,7 +132,11 @@ import java.util.Locale
 
 @Composable
 fun ShowData(viewModel: DataViewModel) {
+
+    val profileViewModel = ProfileViewModel()
+
     when (val result = viewModel.response.value) {
+
         is DataEvent.Loading -> {
             viewModel.progress.value = true
             Box(
@@ -135,7 +149,7 @@ fun ShowData(viewModel: DataViewModel) {
             }
         }
         is DataEvent.Success -> {
-            ListPakaian(pakaian = result.data)
+            ListPakaian(pakaian = result.data, viewModel = profileViewModel)
             viewModel.progress.value = false
         }
 
