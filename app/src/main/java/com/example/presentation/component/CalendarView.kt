@@ -20,9 +20,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import java.util.Calendar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarView(modifier: Modifier = Modifier) {
+fun CalendarView(modifier: Modifier = Modifier, ) {
 
     val today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 

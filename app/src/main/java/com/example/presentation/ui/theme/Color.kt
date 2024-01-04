@@ -10,6 +10,15 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
+// Other stuff
+val darkGray = Color(0xFF1a1717)
+val darkBlue = Color(0xFF18192b)
+val putih = Color(0xFFF3F3F3)
+val gray = Color(0xFF3F3F3F)
+val orange = Color(0xFFdb660d)
+val blueGray = Color(0xFF404352)
+val nightDark = Color(0xFF403757)
+
 // Fashion Mate Color
 val Primary = Color(0xFF000000)
 val Secondary = Color(0xFF0f0f0f)
