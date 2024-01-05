@@ -14,17 +14,4 @@ data class Pakaian(
     var tipe: String? = null,
     var warna: String? = null
 
-) {
-    fun doesMatchSearchQuery(query: String): Boolean {
-        val matchingCombinations = listOf(
-            "$keyword",
-            "$keyword".trim(),
-            "$keyword".uppercase(),
-            "$keyword".lowercase()
-        )
-
-        return matchingCombinations.any() {
-            it.contains(query, ignoreCase = true)
-        }
-    }
-}
+)

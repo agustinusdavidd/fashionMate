@@ -21,5 +21,6 @@ sealed class ProfileEvent {
     data class filterUpload(val status: Boolean = false): ProfileEvent()
     data class clothSaved(val photo_url: String): ProfileEvent()
     data class checkIsSaved(val photo_url: String): ProfileEvent()
+    data class dayClicked(val day: Int, val month: String, val year: String): ProfileEvent()
 
 }

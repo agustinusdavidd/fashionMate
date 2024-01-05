@@ -56,7 +56,7 @@ import java.util.Locale
             // Execute this block when the composable is first launched or recomposed
             profileViewModel.onEvent(ProfileEvent.profileOpened)
 
-            delay(5000)
+            delay(6000)
 
             name = profileViewModel.profileState.value.nama.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(
@@ -168,7 +168,7 @@ fun ShowData(viewModel: DataViewModel) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Error Fetching Data")
+                Text(text = "Please Refresh This Page")
                 viewModel.progress.value = false
             }
         }

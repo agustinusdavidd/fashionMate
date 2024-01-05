@@ -221,9 +221,3 @@ fun EditProfileScreen(
 
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun epsp() {
-    EditProfileScreen(navController = rememberNavController(), ProfileViewModel())
-}

@@ -82,6 +82,9 @@ class ProfileViewModel : ViewModel() {
             is ProfileEvent.checkIsSaved -> {
 
             }
+            is ProfileEvent.dayClicked -> {
+
+            }
             else -> {
                 Log.d("Profile View Model", "Another event : ${event.toString()}")
             }

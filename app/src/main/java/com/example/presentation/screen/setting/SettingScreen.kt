@@ -66,9 +66,3 @@ fun SettingScreen(navController: NavHostController = rememberNavController()) {
         SettingRow(id = Icons.Outlined.Beenhere, name = "Terms and Condition", navHostController = navController)
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun SettingScreenPreview() {
-    SettingScreen()
-}

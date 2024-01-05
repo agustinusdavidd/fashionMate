@@ -187,7 +187,7 @@ fun ShowData(viewModel: DataViewModel) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Error Fetching Data")
+                Text(text = "Please Refresh This Page")
                 viewModel.progress.value = false
             }
         }
